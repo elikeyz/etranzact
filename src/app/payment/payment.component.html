@@ -5,36 +5,34 @@
       <h1>Enter your card details</h1>
       <div>
         <label for="cardno">Credit Card Number</label>
-        <input formControlName="cardNumber" id="cardno" type="text" placeholder="Card Number" autocomplete="cc-number"
-          required>
+        <input [ngClass]="{'invalid': cardNumber.invalid && (cardNumber.dirty || cardNumber.touched)}" formControlName="cardNumber" id="cardno" type="text" placeholder="Card Number" autocomplete="cc-number">
         <small class="validation">You must enter your card number</small>
       </div>
       <div>
         <label for="cardholder">Card Holder</label>
-        <input formControlName="cardHolder" id="cardholder" type="text" placeholder="Card Holder" autocomplete="cc-name"
-          required>
+        <input [ngClass]="{'invalid': cardHolder.invalid && (cardHolder.dirty || cardHolder.touched)}" formControlName="cardHolder" id="cardholder" type="text" placeholder="Card Holder" autocomplete="cc-name">
         <small class="validation">You must enter your card holder name</small>
       </div>
       <div class="inline-form-section">
         <div class="inline-left">
           <label for="expiry-date">Expiration Date</label>
-          <input (input)="handleExpChange()" formControlName="expDate" type="text" id="expiry-date" maxlength="5"
-            placeholder="MM/YY" autocomplete="cc-exp" required>
+          <input [ngClass]="{'invalid': expDate.invalid && (expDate.dirty || expDate.touched)}" (input)="handleExpChange()" formControlName="expDate" type="text" id="expiry-date"
+            placeholder="MM/YY" autocomplete="cc-exp">
           <small class="validation">You must enter your card expiry date</small>
         </div>
         <div class="inline-right">
           <label for="cvv">CVV</label>
-          <input formControlName="cvv" id="cvv" type="number" maxlength="3" placeholder="XXX" autocomplete="cc-csc">
-          <small class="validation">Your CVV number must be a 3 digit number</small>
+          <input [ngClass]="{'invalid': cvv.invalid && (cvv.dirty || cvv.touched)}" formControlName="cvv" id="cvv" type="number" maxlength="3" placeholder="XXX" autocomplete="cc-csc">
+          <small class="validation">Your CVV must be a 3 digit number</small>
         </div>
       </div>
       <div>
         <label for="amount">Amount</label>
-        <input formControlName="amount" id="amount" type="number" placeholder="Amount"
+        <input [ngClass]="{'invalid': amount.invalid && (amount.dirty || amount.touched)}" formControlName="amount" id="amount" type="number" placeholder="Amount"
           autocomplete="transaction-amount">
         <small class="validation">You must enter an amount greater than 0</small>
       </div>
-      <button>Pay</button>
+      <button [disabled]="!paymentDetails.valid" >Pay</button>
     </form>
   </div>
 </main>

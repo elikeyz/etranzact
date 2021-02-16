@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { PaymentService } from '../payment.service';
 
 @Component({
@@ -12,15 +12,42 @@ export class PaymentComponent implements OnInit {
   constructor(private payment: PaymentService) { }
 
   paymentDetails = new FormGroup({
-    cardNumber: new FormControl(''),
-    cardHolder: new FormControl(''),
-    expDate: new FormControl(''),
-    cvv: new FormControl(''),
-    amount: new FormControl('')
+    cardNumber: new FormControl('', [Validators.required]),
+    cardHolder: new FormControl('', [Validators.required]),
+    expDate: new FormControl('', [Validators.required, this.validateExpDate()]),
+    cvv: new FormControl('', [Validators.maxLength(3), Validators.minLength(3)]),
+    amount: new FormControl('', [Validators.required, this.validateAmount()])
   });
 
 
   ngOnInit(): void {
+  }
+
+  validateExpDate(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      if (/^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/.test(control.value)) {
+        return { invalidDate: true };
+      }
+
+      const [month, year] = control.value.split('/');
+      const date = new Date(Number('20' + year), Number(month) - 1);
+
+      if (date < new Date()) {
+        return { pastDate: true };
+      }
+
+      return null;
+    };
+  }
+
+  validateAmount(): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      if (Number(control.value) <= 0) {
+        return { invalidAmount: true };
+      }
+
+      return null;
+    };
   }
 
   handleExpChange(): void {
@@ -34,7 +61,9 @@ export class PaymentComponent implements OnInit {
   }
 
   submitDetails(): void {
-    this.payment.pay(this.paymentDetails.value);
+    if (this.paymentDetails.valid) {
+      this.payment.pay(this.paymentDetails.value);
+    }
   }
 
 }
