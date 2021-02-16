@@ -1,0 +1,40 @@
+<main>
+  <div class="form-container">
+    <div class="form-left"></div>
+    <form [formGroup]="paymentDetails" (ngSubmit)="submitDetails()" class="form-main">
+      <h1>Enter your card details</h1>
+      <div>
+        <label for="cardno">Credit Card Number</label>
+        <input formControlName="cardNumber" id="cardno" type="text" placeholder="Card Number" autocomplete="cc-number"
+          required>
+        <small class="validation">You must enter your card number</small>
+      </div>
+      <div>
+        <label for="cardholder">Card Holder</label>
+        <input formControlName="cardHolder" id="cardholder" type="text" placeholder="Card Holder" autocomplete="cc-name"
+          required>
+        <small class="validation">You must enter your card holder name</small>
+      </div>
+      <div class="inline-form-section">
+        <div class="inline-left">
+          <label for="expiry-date">Expiration Date</label>
+          <input (input)="handleExpChange()" formControlName="expDate" type="text" id="expiry-date" maxlength="5"
+            placeholder="MM/YY" autocomplete="cc-exp" required>
+          <small class="validation">You must enter your card expiry date</small>
+        </div>
+        <div class="inline-right">
+          <label for="cvv">CVV</label>
+          <input formControlName="cvv" id="cvv" type="number" maxlength="3" placeholder="XXX" autocomplete="cc-csc">
+          <small class="validation">Your CVV number must be a 3 digit number</small>
+        </div>
+      </div>
+      <div>
+        <label for="amount">Amount</label>
+        <input formControlName="amount" id="amount" type="number" placeholder="Amount"
+          autocomplete="transaction-amount">
+        <small class="validation">You must enter an amount greater than 0</small>
+      </div>
+      <button>Pay</button>
+    </form>
+  </div>
+</main>

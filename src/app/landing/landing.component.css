@@ -1,0 +1,18 @@
+main {
+  display: flex;
+  height: calc(100% - 50px);
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.checkout-btn {
+  background-color: #673AB7;
+  border: none;
+  padding: 10px;
+  font-size: 1rem;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  text-decoration: none;
+}
