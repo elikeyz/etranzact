@@ -1,4 +1,11 @@
 <header>
   <a [routerLink]="['/']">eTranzact</a>
 </header>
+<main style="text-align: center;">
+  <p *ngIf="!!cardNumber">Card Number: {{ cardNumber }}</p>
+  <p *ngIf="!!cardHolder">Card Holder: {{ cardHolder }}</p>
+  <p *ngIf="!!expDate">Expiration Date: {{ expDate }}</p>
+  <p *ngIf="!!cvv">CVV: {{ cvv }}</p>
+  <p *ngIf="!!amount">Amount: {{ amount }}</p>
+</main>
 <router-outlet></router-outlet>
