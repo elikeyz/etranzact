@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { ToastrModule } from 'ngx-toastr';
@@ -20,6 +21,7 @@ import { paymentReducer } from './payment.reducer';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
     StoreModule.forRoot({ payment: paymentReducer }),
     ToastrModule.forRoot()
   ],

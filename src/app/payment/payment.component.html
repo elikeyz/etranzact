@@ -18,7 +18,9 @@
           <label for="expiry-date">Expiration Date</label>
           <input [ngClass]="{'invalid': expDate.invalid && (expDate.dirty || expDate.touched)}" (input)="handleExpChange()" formControlName="expDate" type="text" id="expiry-date"
             placeholder="MM/YY" autocomplete="cc-exp">
-          <small class="validation">You must enter your card expiry date</small>
+          <small *ngIf="expDate.errors?.required" class="validation">You must enter your card expiry date</small>
+          <small *ngIf="expDate.errors?.pastDate" class="validation">Your expiry date must be a future date</small>
+          <small *ngIf="expDate.errors?.invalidDate" class="validation">Your expiry date is invalid</small>
         </div>
         <div class="inline-right">
           <label for="cvv">CVV</label>
@@ -32,7 +34,7 @@
           autocomplete="transaction-amount">
         <small class="validation">You must enter an amount greater than 0</small>
       </div>
-      <button [disabled]="!paymentDetails.valid" >Pay</button>
+      <button>Pay</button>
     </form>
   </div>
 </main>

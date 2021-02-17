@@ -11,12 +11,18 @@ export class PaymentComponent implements OnInit {
 
   constructor(private payment: PaymentService) { }
 
+  cardNumber = new FormControl('', [Validators.required]);
+  cardHolder = new FormControl('', [Validators.required]);
+  expDate = new FormControl('', [Validators.required, this.validateExpDate()]);
+  cvv = new FormControl('', [Validators.maxLength(3), Validators.minLength(3)]);
+  amount = new FormControl('', [Validators.required, this.validateAmount()]);
+
   paymentDetails = new FormGroup({
-    cardNumber: new FormControl('', [Validators.required]),
-    cardHolder: new FormControl('', [Validators.required]),
-    expDate: new FormControl('', [Validators.required, this.validateExpDate()]),
-    cvv: new FormControl('', [Validators.maxLength(3), Validators.minLength(3)]),
-    amount: new FormControl('', [Validators.required, this.validateAmount()])
+    cardNumber: this.cardNumber,
+    cardHolder: this.cardHolder,
+    expDate: this.expDate,
+    cvv: this.cvv,
+    amount: this.amount
   });
 
 
@@ -25,7 +31,7 @@ export class PaymentComponent implements OnInit {
 
   validateExpDate(): ValidatorFn {
     return (control: AbstractControl): {[key: string]: any} | null => {
-      if (/^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/.test(control.value)) {
+      if (!/^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/.test(control.value)) {
         return { invalidDate: true };
       }
 
@@ -51,7 +57,6 @@ export class PaymentComponent implements OnInit {
   }
 
   handleExpChange(): void {
-    console.log(this.paymentDetails.value.expDate);
     if (this.paymentDetails.value.expDate.length > 2 && !this.paymentDetails.value.expDate.includes('/')) {
       const newValue = this.paymentDetails.value.expDate.slice(0, 2) + '/' + this.paymentDetails.value.expDate.slice(2);
       this.paymentDetails.patchValue({
